@@ -1,9 +1,8 @@
 ## 1. Analyze output from memory forensic tool. Can you see something suspicious?
 ```
-vol.py -f /home/john/MemoryDumps/rootkit.vmem pslist
+vol.py -f /home/john/MemoryDumps/mem.vmem pslist
 Volatility Foundation Volatility Framework 2.6.1
-/usr/local/lib/python2.7/dist-packages/volatility/plugins/community/YingLi/ssh_agent_key.py:12: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in the next release.
-  from cryptography.hazmat.backends.openssl import backend
+
 Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit
 ---------- -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------
 0x823c8830 System                    4      0     58      476 ------      0     
@@ -29,18 +28,14 @@ C:\Users\username\AppData\Local\Temp\cmd.exe
 C:\Users\username\AppData\Roaming\svchost.exe
 C:\Users\username\AppData\Local\Microsoft\Edge\User Data\Default\Extensions\payload.js
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\script.bat
-C:\Windows\System32\drivers\etc\hosts 
-C:\Windows\System32\svchost.exe 
-C:\Windows\SysWOW64\calc.exe
+C:\Windows\calc.exe
 C:\Users\username\Downloads\invoice_1234.exe
 C:\Users\username\Desktop\passwords.scr
 C:\Users\username\Pictures\image.jpg.exe
-C:\Users\username\AppData\Local\Temp\.hidden_payload.dll
+C:\Users\username\AppData\Local\Temp\.payload.dll
 C:\Windows\System32\drivers\.driver.sys
-C:\Users\username\AppData\Local\Temp\O1iIl1.exe
-C:\Windows\Temp\{GUID}.exe
-C:\Recycle\Desktop.ini
-C:\Windows\Help\help.pdf.exe
+C:\Windows\Temp\e8dc049d-229d-4a3b-a900-8fc897f4386c.exe
+C:\Recycle\psexec.exe
 ```
 
 ## 3. Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
