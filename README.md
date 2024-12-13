@@ -203,7 +203,7 @@ history -c
 ## 13. Analyze process tree. What can possibly be going on here?
 ```
 WINWORD.EXE (PID: 1234)  
-   └── WINWORD.EXE [Child VBA Script] (PID: 2345)  
+   └── WINWORD.EXE (PID: 2345)  
         └── cmd.exe (PID: 3456)  
              └── wscript.exe (PID: 4567)  
                   └── powershell.exe (PID: 5678)  
