@@ -17,7 +17,7 @@ Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Star
 0x8228f020 scvhost.exe            1142    2980     5       77      0      0 2023-06-24 07:31:17 UTC+0000
 0x81e63ab8 svchost.exe            1220    668     15      218      0      0 2023-06-23 16:14:54 UTC+0000
 0x81924888 explorer.exe           1444    624     17      524      0      0 2023-06-23 16:34:38 UTC+0000
-0x81863138 cmd.exe                2980   1444      0 --------      0      0 2023-06-24 07:31:16 UTC+0000
+0x81863138 cmd.exe                2980   1444      1 --------      0      0 2023-06-24 07:31:16 UTC+0000
 ```
 
 ## 2. During incident investigation you found some interesting files tell me which one looks potentialy suspicious and why?
