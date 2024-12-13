@@ -94,7 +94,7 @@ CommandLineTemplate="powershell.exe -nop -w hidden -enc JAB0AGgAIAAiACQAcgBvAGcA
 wmic /namespace:\\root\subscription PATH __FilterToConsumerBinding CREATE Filter="\\\\.\\root\\subscription:__EventFilter.Name='EventFilter_MSEdgeUpdate'", 
 Consumer="\\\\.\\root\\subscription:CommandLineEventConsumer.Name='ExecuteUpdate'"
 ```
-## 6. Analyze process tree. What can possibly be going on here?
+## 6. Analyze few sysmon artifacts. What can possibly be going on here?
 - Process tree
 ```
 WINWORD.EXE (PID: 1234)  
