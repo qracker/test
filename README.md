@@ -201,6 +201,7 @@ chmod 700 /home/attacker/.ssh
 history -c
 ```
 ## 13. Analyze process tree. What can possibly be going on here?
+- Process tree
 ```
 WINWORD.EXE (PID: 1234)  
    └── WINWORD.EXE (PID: 2345)  
@@ -210,4 +211,36 @@ WINWORD.EXE (PID: 1234)
                        └── macro.exe (PID: 6789)  
 
 ```
+- Network Connection
+```
+Time: 2024-12-13 14:32:25  
+Event ID: 3  
+Source Process: powershell.exe (PID: 5678)  
+Source IP: 192.168.1.100  
+Source Port: 51532  
+Destination IP: 198.51.100.25  
+Destination Port: 443  
+Protocol: TCP  
+```
+- Process creation
+```
+Time: 2024-12-13 14:32:15  
+Event ID: 1  
+Process Name: cmd.exe  
+PID: 3456  
+Command Line: cmd.exe /c wscript.exe document1.vbs  
+Parent Process: WINWORD.EXE (PID: 2345)  
+User: DOMAIN\johndoe  
+```
+- Process creation
+```
+Time: 2024-12-13 14:32:20  
+Event ID: 1  
+Process Name: powershell.exe  
+PID: 5678  
+Command Line: powershell.exe -nop -w hidden -encodedCommand <base64_string>  
+Parent Process: wscript.exe (PID: 4567)  
+User: DOMAIN\johndoe  
+```
+
 
