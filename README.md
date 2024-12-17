@@ -30,10 +30,9 @@ C:\Windows\calc.exe
 C:\Users\username\Downloads\invoice_1234.exe
 C:\Users\username\Desktop\passwords.scr
 C:\Users\username\Pictures\image.jpg.exe
-C:\Users\username\AppData\Local\Temp\.payload.dll
-C:\Windows\System32\drivers\.driver.sys
+C:\Users\username\AppData\Local\Temp\payload.dll
 C:\Windows\Temp\e8dc049d-229d-4a3b-a900-8fc897f4386c.exe
-C:\Recycle\psexec.exe
+C:\$Recycle.bin\psexec.exe
 ```
 
 ## 3a. Refer to below output which process requires additional analyzes? Explain why. Is there a possibility for False positives?
